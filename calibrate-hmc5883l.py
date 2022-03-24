@@ -41,11 +41,17 @@ maxz = 0
 
 print ("Now repeatedly rotate the hmc5883l around all three axes")
 
+x_raw = []
+y_raw = []
+
+
 for i in range(0,100):
     x_out = read_word_2c(3)
     y_out = read_word_2c(7)
     z_out = read_word_2c(5)
     
+    x_raw.append(x_out)
+    y_raw.append(y_out)
     
     if x_out < minx:
         minx=x_out
@@ -77,3 +83,6 @@ print ( "z: min, max = %.0f, %.0f" % (minz, maxz) )
 print ("x offset: ", (maxx + minx) / 2)
 print ("y offset: ", (maxy + miny) / 2)
 print ("z offset: ", (maxz + minz) / 2)
+
+import numpy as np
+np.save('magnet_data_lab3',np.array([x_raw,y_raw]))

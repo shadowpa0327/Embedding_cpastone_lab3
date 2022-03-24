@@ -84,7 +84,7 @@ class BMP180(IMU):
     # read uncompensated temperature value
     def getTempC(self) :
         # print ("Calculating temperature...")
-        self.write_byte(0xF4, 0x??)
+        self.write_byte(0xF4, 0x2E)
         time.sleep(0.005)
         
         ut = self.read_word(0xF6,0)
@@ -107,7 +107,7 @@ class BMP180(IMU):
     # read uncompensated pressure value
     def getPress(self) :
         # print ("Calculating temperature...")
-        self.write_byte(0xF4, 0x??)
+        self.write_byte(0xF4, 0x2E)
         time.sleep(0.005)
         
         ut = self.read_word(0xF6,0)
@@ -157,23 +157,24 @@ class BMP180(IMU):
         return self.altitude
 
 try:
-    # if run directly we'll just create an instance of the class and output 
-    # the current readings
+    while 1:
+        # if run directly we'll just create an instance of the class and output 
+        # the current readings
     
-    sensors = gy801()
+        sensors = gy801()
 
-    barometer = sensors.baro
+        barometer = sensors.baro
     
-    tempC = barometer.getTempC()
-    tempF = barometer.getTempF()
-    press = barometer.getPress()
-    altitude = barometer.getAltitude()
+        tempC = barometer.getTempC()
+        tempF = barometer.getTempF()
+        press = barometer.getPress()
+        altitude = barometer.getAltitude()
    
-    print ("Baro:" )
-    print ("   Temp: %f C (%f F)" %(tempC,tempF))
-    print ("   Press: %f (hPa)" %(press))
-    print ("   Altitude: %f m s.l.m" %(altitude))
-
+        print ("Baro:" )
+        print ("   Temp: %f C (%f F)" %(tempC,tempF))
+        print ("   Press: %f (hPa)" %(press))
+        print ("   Altitude: %f m s.l.m" %(altitude))
+        time.sleep(1)
         
 except KeyboardInterrupt:
     print("Cleanup")
